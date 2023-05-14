@@ -50,7 +50,8 @@ for index, row in df.iterrows():
               'Diaper' : 0,
               'Bagel' : 0}
     for i in range(len(row)-1):
-        labels[row[i]] =  labels.get(row[i],0) + 1
+        if row[i] in labels:
+            labels[row[i]] =  labels.get(row[i],0) + 1
     encoded_vals.append(labels)
     print(labels)
 #adding the populated list with multiple dictionaries to a data frame
@@ -67,18 +68,23 @@ rules = association_rules(freq_items, metric="confidence", min_threshold=0.6)
 #Prior: 0.4380952380952381
 #Gain in Confidence: 52.17391304347825
 #-->add your python code below
-for term in rules:
-    print(term)
+supportCount = 0
+print(rules)
+for i in range(len(rules)):
+    currSupport = rules['support']
+    print("current support: " + str(currSupport))
+    currConfidence = rules['confidence']
+    print("current confidence: " + str(currConfidence))
+    #To calculate the prior and gain in confidence, find in how many transactions the consequent of the rule appears (the supporCount below). Then,
+    #use the gain formula provided right after.
+    prior = supportCount/len(encoded_vals) 
+    print("Gain in Confidence: " + str(100*(currConfidence-prior)/prior))
+    supportCount += 1
+    #-->add your python code below
 
-#To calculate the prior and gain in confidence, find in how many transactions the consequent of the rule appears (the supporCount below). Then,
-#use the gain formula provided right after.
-#prior = suportCount/len(encoded_vals) -> encoded_vals is the number of transactions
-#print("Gain in Confidence: " + str(100*(rule_confidence-prior)/prior))
-#-->add your python code below
-
-#Finally, plot support x confidence
-plt.scatter(rules['support'], rules['confidence'], alpha=0.5)
-plt.xlabel('support')
-plt.ylabel('confidence')
-plt.title('Support vs Confidence')
-plt.show()
+    #Finally, plot support x confidence
+    plt.scatter(rules['support'], rules['confidence'], alpha=0.5)
+    plt.xlabel('support')
+    plt.ylabel('confidence')
+    plt.title('Support vs Confidence')
+    plt.show()
