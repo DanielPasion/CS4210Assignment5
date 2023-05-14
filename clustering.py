@@ -52,5 +52,5 @@ df = pd.read_csv('testing_data.csv', sep=',', header=None)
 labels = np.array(df.values).reshape(1,3823)[0]
 
 #Calculate and print the Homogeneity of this kmeans clustering
-print("K-Means Homogeneity Score = " + metrics.homogeneity_score(labels, kmeans.labels_).__str__())
 #--> add your Python code here
+print("K-Means Homogeneity Score = " + metrics.homogeneity_score(labels, kmeans.labels_).__str__())

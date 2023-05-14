@@ -40,11 +40,19 @@ itemset.remove(np.nan)
 
 encoded_vals = []
 for index, row in df.iterrows():
-
-    labels = {}
-
+    labels = {'Bread':0,
+              'Milk': 0,
+              'Wine': 0,
+              'Eggs': 0,
+              'Meat': 0,
+              'Cheese': 0,
+              'Pencil': 0,
+              'Diaper' : 0,
+              'Bagel' : 0}
+    for i in range(len(row)-1):
+        labels[row[i]] =  labels.get(row[i],0) + 1
     encoded_vals.append(labels)
-
+    print(labels)
 #adding the populated list with multiple dictionaries to a data frame
 ohe_df = pd.DataFrame(encoded_vals)
 
@@ -53,13 +61,14 @@ freq_items = apriori(ohe_df, min_support=0.2, use_colnames=True, verbose=1)
 rules = association_rules(freq_items, metric="confidence", min_threshold=0.6)
 
 #iterate the rules data frame and print the apriori algorithm results by using the following format:
-
 #Meat, Cheese -> Eggs
 #Support: 0.21587301587301588
 #Confidence: 0.6666666666666666
 #Prior: 0.4380952380952381
 #Gain in Confidence: 52.17391304347825
 #-->add your python code below
+for term in rules:
+    print(term)
 
 #To calculate the prior and gain in confidence, find in how many transactions the consequent of the rule appears (the supporCount below). Then,
 #use the gain formula provided right after.
