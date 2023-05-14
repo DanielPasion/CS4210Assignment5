@@ -71,6 +71,7 @@ rules = association_rules(freq_items, metric="confidence", min_threshold=0.6)
 supportCount = 0
 print(rules)
 for i in range(len(rules)):
+    print("\n\n\n\nStart of print chain")
     currSupport = rules['support']
     print("current support: " + str(currSupport))
     currConfidence = rules['confidence']
